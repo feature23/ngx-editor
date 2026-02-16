@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
@@ -18,10 +18,9 @@ import { ToggleCommands } from '../MenuCommands';
   providers: [SanitizeHtmlPipe],
 })
 export class BubbleComponent implements OnInit, OnDestroy {
-  constructor(
-    private sanitizeHTML: SanitizeHtmlPipe,
-    private ngxeService: NgxEditorService,
-  ) {}
+  private sanitizeHTML = inject(SanitizeHtmlPipe);
+  private ngxeService = inject(NgxEditorService);
+
 
   private get view(): EditorView {
     return this.editor.view;
@@ -60,10 +59,6 @@ export class BubbleComponent implements OnInit, OnDestroy {
 
   getTitle(name: string): Observable<string> {
     return this.ngxeService.locals.get(name);
-  }
-
-  trackByIndex(index: number): number {
-    return index;
   }
 
   onClick(e: MouseEvent, commandName: TBItems): void {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnDestroy, OnInit, ViewEncapsulation, isDevMode } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -24,14 +24,13 @@ import schema from './schema';
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NgxEditorComponent,
     NgxEditorMenuComponent,
     NgxEditorFloatingMenuComponent,
-    AppCustomMenuComponent,
-  ],
+    AppCustomMenuComponent
+],
 })
 export class EditorComponent implements OnInit, OnDestroy {
   isDevMode = isDevMode();

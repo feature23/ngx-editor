@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
@@ -17,6 +17,9 @@ import { InsertCommands } from '../MenuCommands';
   imports: [AsyncPipe, SanitizeHtmlPipe],
 })
 export class InsertCommandComponent implements OnInit, OnDestroy {
+  private ngxeService = inject(NgxEditorService);
+  private menuService = inject(MenuService);
+
   @Input() toolbarItem: ToolbarItem;
 
   get name(): TBItems {
@@ -27,11 +30,6 @@ export class InsertCommandComponent implements OnInit, OnDestroy {
   editorView: EditorView;
   disabled = false;
   private updateSubscription: Subscription;
-
-  constructor(
-    private ngxeService: NgxEditorService,
-    private menuService: MenuService,
-  ) {}
 
   onMouseClick(e: MouseEvent): void {
     e.preventDefault();
