@@ -1,29 +1,15 @@
-# NgxEditor
+<!-- FEATURE23-FORK: README rewritten for fork -->
+
+# @feature23/ngx-editor
+
+> **This is a fork of [ngx-editor](https://github.com/sibiraj-s/ngx-editor) maintained by [feature23](https://github.com/feature23).** It includes experimental changes and Angular version updates that have not yet been merged upstream. If you don't need these changes, please use the official package at [ngx-editor](https://github.com/sibiraj-s/ngx-editor).
 
 <p align="center">
-  <a href="https://github.com/sibiraj-s/ngx-editor">
+  <a href="https://github.com/feature23/ngx-editor">
    <img src="./sketch/ngx-editor.svg" alt="ngxEditor">
   </a>
 </p>
 <p align="center">The Rich Text Editor for Angular, Built on ProseMirror</p>
-<p align="center">
-  <a href="https://github.com/sibiraj-s/ngx-editor/actions">
-    <img alt="Tests" src="https://github.com/sibiraj-s/ngx-editor/workflows/Tests/badge.svg">
-  </a>
-  <a href="https://www.npmjs.com/package/ngx-editor">
-    <img alt="npm version" src="https://badgen.net/npm/v/ngx-editor">
-  </a>
-  <a href="https://www.npmjs.com/package/ngx-editor">
-    <img alt="npm" src="https://badgen.net/npm/dm/ngx-editor">
-  </a>
-  <a href="https://www.npmjs.com/package/ngx-editor">
-    <img alt="npm" src="https://badgen.net/npm/dt/ngx-editor">
-  </a>
-  <br />
-  <a href="https://github.com/sibiraj-s/ngx-editor/blob/master/LICENSE">
-    <img alt="licence" src="https://badgen.net/npm/license/ngx-editor">
-  </a>
-</p>
 
 > A simple rich text editor for angular applications built with ProseMirror. It is a drop in and easy-to-use editor
 > and can be easily extended using prosemirror plugins to build any additional or missing features
@@ -37,11 +23,11 @@
 Install via Package managers such as [npm] or [pnpm] or [yarn]
 
 ```bash
-npm install ngx-editor
+npm install @feature23/ngx-editor
 # or
-pnpm install ngx-editor
+pnpm install @feature23/ngx-editor
 # or
-yarn add ngx-editor
+yarn add @feature23/ngx-editor
 ```
 
 ### Usage
@@ -51,7 +37,11 @@ yarn add ngx-editor
 Component
 
 ```ts
-import { NgxEditorComponent, NgxEditorMenuComponent, Editor } from 'ngx-editor';
+import {
+  NgxEditorComponent,
+  NgxEditorMenuComponent,
+  Editor,
+} from '@feature23/ngx-editor';
 import { FormsModule } from '@angular/forms';
 
 @Component({
