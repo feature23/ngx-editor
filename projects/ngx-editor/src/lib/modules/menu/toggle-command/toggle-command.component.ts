@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -17,6 +17,9 @@ import { ToggleCommands } from '../MenuCommands';
   imports: [AsyncPipe, SanitizeHtmlPipe],
 })
 export class ToggleCommandComponent implements OnInit, OnDestroy {
+  private ngxeService = inject(NgxEditorService);
+  private menuService = inject(MenuService);
+
   @Input() toolbarItem: ToolbarItem;
 
   get name(): TBItems {
@@ -28,11 +31,6 @@ export class ToggleCommandComponent implements OnInit, OnDestroy {
   isActive = false;
   disabled = false;
   private updateSubscription: Subscription;
-
-  constructor(
-    private ngxeService: NgxEditorService,
-    private menuService: MenuService,
-  ) {}
 
   toggle(): void {
     const { state, dispatch } = this.editorView;

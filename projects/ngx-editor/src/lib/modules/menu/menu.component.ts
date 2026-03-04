@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, inject } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { NgxEditorError } from 'ngx-editor/utils';
@@ -80,6 +80,8 @@ const DEFAULT_COLOR_PRESETS = [
   ],
 })
 export class NgxEditorMenuComponent implements OnInit {
+  private menuService = inject(MenuService);
+
   @Input() toolbar: Toolbar = TOOLBAR_MINIMAL;
   @Input() colorPresets: string[] = DEFAULT_COLOR_PRESETS;
   @Input() disabled = false;
@@ -117,8 +119,6 @@ export class NgxEditorMenuComponent implements OnInit {
   dropdownContainerClass = ['NgxEditor__Dropdown'];
   seperatorClass = ['NgxEditor__Seperator'];
 
-  constructor(private menuService: MenuService) {}
-
   get presets(): string[][] {
     const col = 8;
     const colors: string[][] = [];
@@ -134,10 +134,6 @@ export class NgxEditorMenuComponent implements OnInit {
     });
 
     return colors;
-  }
-
-  trackByIndex(index: number): number {
-    return index;
   }
 
   isDropDown(item: ToolbarItem): boolean {

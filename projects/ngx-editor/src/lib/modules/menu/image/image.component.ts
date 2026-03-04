@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, inject } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { uniq } from 'ngx-editor/utils';
@@ -19,6 +19,10 @@ import { Image as ImageCommand } from '../MenuCommands';
   imports: [AsyncPipe, SanitizeHtmlPipe, ReactiveFormsModule, CommonModule],
 })
 export class ImageComponent implements OnInit, OnDestroy {
+  private el = inject(ElementRef);
+  private ngxeService = inject(NgxEditorService);
+  private menuService = inject(MenuService);
+
   showPopup = false;
   isActive = false;
   private componentId = uniq();
@@ -34,12 +38,6 @@ export class ImageComponent implements OnInit, OnDestroy {
   });
 
   private editorView: EditorView;
-
-  constructor(
-    private el: ElementRef,
-    private ngxeService: NgxEditorService,
-    private menuService: MenuService,
-  ) {}
 
   get icon(): HTML {
     return this.ngxeService.getIcon('image');
