@@ -1,12 +1,13 @@
 {
+  "FEATURE23-FORK": "version, repository, bugs, homepage modified; name renamed to @feature23/ngx-editor at build time via scripts/postbuild.js",
   "name": "ngx-editor",
-  "version": "19.0.0-beta.1",
+  "version": "19.0.0",
   "description": "The Rich Text Editor for Angular, Built on ProseMirror",
   "license": "MIT",
   "type": "module",
-  "repository": "https://github.com/sibiraj-s/ngx-editor.git",
-  "bugs": "https://github.com/sibiraj-s/ngx-editor/issues",
-  "homepage": "https://github.com/sibiraj-s/ngx-editor",
+  "repository": "https://github.com/feature23/ngx-editor.git",
+  "bugs": "https://github.com/feature23/ngx-editor/issues",
+  "homepage": "https://github.com/feature23/ngx-editor",
   "keywords": [
     "angular-editor",
     "angular-wysiwyg-editor",
