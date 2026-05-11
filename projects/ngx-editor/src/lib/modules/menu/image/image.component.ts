@@ -61,13 +61,25 @@ export class ImageComponent implements OnInit, OnDestroy {
     return this.ngxeService.locals.get(key);
   }
 
-  private hideForm(): void {
+  private hideForm(returnFocus = false): void {
     this.showPopup = false;
     this.form.reset({
       src: '',
       alt: '',
       title: '',
     });
+    if (returnFocus) {
+      (this.el.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('button')?.focus();
+    }
+  }
+
+  @HostListener('keydown.escape', ['$event']) onEscape(e: Event): void {
+    if (!this.showPopup) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    this.hideForm(true);
   }
 
   togglePopup(): void {

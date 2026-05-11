@@ -41,8 +41,11 @@ export class InsertCommandComponent implements OnInit, OnDestroy {
     this.insert();
   }
 
-  onKeydown(): void {
+  onKeydown(e: Event): void {
+    e.preventDefault();
+    e.stopPropagation();
     this.insert();
+    setTimeout(() => this.editorView.focus(), 0);
   }
 
   insert(): void {

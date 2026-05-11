@@ -48,8 +48,13 @@ export class ToggleCommandComponent implements OnInit, OnDestroy {
     this.toggle();
   }
 
-  onKeydown(): void {
+  onKeydown(e: Event): void {
+    e.preventDefault();
+    e.stopPropagation();
     this.toggle();
+    // Defer focus until after the current key event finishes, so subsequent
+    // keypress/keyup events don't get delivered to the editor.
+    setTimeout(() => this.editorView.focus(), 0);
   }
 
   update = (view: EditorView): void => {

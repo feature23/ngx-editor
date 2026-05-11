@@ -7,6 +7,7 @@
   (mousedown)="onToggleDropdownMouseClick($event)"
   (keydown.enter)="onToggleDropdownKeydown()"
   (keydown.space)="onToggleDropdownKeydown()"
+  (keydown)="onTriggerKeydown($event)"
   [ariaLabel]="getName(activeItem || group) | async"
   aria-haspopup="listbox"
   [ariaExpanded]="isDropdownOpen"
@@ -15,11 +16,12 @@
 </button>
 
 @if (isDropdownOpen) {
-  <div class="NgxEditor__Dropdown--DropdownMenu" role="listbox">
+  <div class="NgxEditor__Dropdown--DropdownMenu" role="listbox" tabindex="-1" (keydown)="onDropdownKeydown($event)">
     @for (item of items; track $index) {
       <button
         type="button"
         class="NgxEditor__Dropdown--Item"
+        [disabled]="disabledItems.includes(item)"
         (mousedown)="onDropdownItemMouseClick($event, item)"
         (keydown.enter)="onDropdownItemKeydown($event, item)"
         (keydown.space)="onDropdownItemKeydown($event, item)"
