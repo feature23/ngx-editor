@@ -1,4 +1,6 @@
 import Editor from './Editor';
+import { HORIZONTAL_RULE } from './commands';
+import { TextSelection } from 'prosemirror-state';
 
 describe('Editor', () => {
   it('should create the editor correctly', () => {
@@ -81,5 +83,89 @@ describe('Editor: Commands', () => {
 
     editor.commands.focus().insertText(' there').exec();
     expect(editor.view.state.doc.textContent).toBe('Hello there');
+  });
+});
+
+describe('Editor: HorizontalRule', () => {
+  it('should insert a horizontal rule followed by a paragraph on an empty editor', () => {
+    const editor = new Editor();
+    const { state } = editor.view;
+
+    HORIZONTAL_RULE.insert()(state, editor.view.dispatch.bind(editor.view));
+
+    const { doc } = editor.view.state;
+    expect(doc.childCount).toBe(2);
+    expect(doc.child(0).type.name).toBe('horizontal_rule');
+    expect(doc.child(1).type.name).toBe('paragraph');
+  });
+
+  it('should insert a horizontal rule in the middle of content', () => {
+    const editor = new Editor({ content: 'Hello' });
+    const { state } = editor.view;
+
+    HORIZONTAL_RULE.insert()(state, editor.view.dispatch.bind(editor.view));
+
+    const { doc } = editor.view.state;
+    expect(doc.child(0).type.name).toBe('horizontal_rule');
+    expect(doc.child(1).type.name).toBe('paragraph');
+  });
+
+  it('should preserve text when cursor is at the end of a non-empty paragraph', () => {
+    const editor = new Editor({ content: 'Hello' });
+
+    // Place cursor at the end of "Hello" (position 6: doc=0, p=1, H=1,e=2,l=3,l=4,o=5, end=6)
+    const endPos = editor.view.state.doc.content.size - 1; // end of text inside paragraph
+    const tr = editor.view.state.tr.setSelection(TextSelection.create(editor.view.state.doc, endPos));
+    editor.view.dispatch(tr);
+
+    const { state } = editor.view;
+    HORIZONTAL_RULE.insert()(state, editor.view.dispatch.bind(editor.view));
+
+    const { doc } = editor.view.state;
+    // The original paragraph with "Hello" must still exist
+    expect(doc.child(0).type.name).toBe('paragraph');
+    expect(doc.child(0).textContent).toBe('Hello');
+    // Followed by a horizontal rule and a new paragraph
+    expect(doc.child(1).type.name).toBe('horizontal_rule');
+    expect(doc.child(2).type.name).toBe('paragraph');
+  });
+
+  it('should not add trailing empty paragraph when next sibling exists', () => {
+    const editor = new Editor({ content: '<p>First</p><p>Second</p>' });
+
+    // Place cursor at the end of "First"
+    const endPos = editor.view.state.doc.child(0).nodeSize - 1; // end of text in first paragraph
+    const tr = editor.view.state.tr.setSelection(TextSelection.create(editor.view.state.doc, endPos));
+    editor.view.dispatch(tr);
+
+    const { state } = editor.view;
+    HORIZONTAL_RULE.insert()(state, editor.view.dispatch.bind(editor.view));
+
+    const { doc } = editor.view.state;
+    expect(doc.childCount).toBe(3);
+    expect(doc.child(0).type.name).toBe('paragraph');
+    expect(doc.child(0).textContent).toBe('First');
+    expect(doc.child(1).type.name).toBe('horizontal_rule');
+    expect(doc.child(2).type.name).toBe('paragraph');
+    expect(doc.child(2).textContent).toBe('Second');
+  });
+
+  it('should split text when cursor is in the middle of a paragraph', () => {
+    const editor = new Editor({ content: 'Hello World' });
+
+    // Place cursor between "Hello" and " World" (position 6, after "Hello")
+    const tr = editor.view.state.tr.setSelection(TextSelection.create(editor.view.state.doc, 6));
+    editor.view.dispatch(tr);
+
+    const { state } = editor.view;
+    HORIZONTAL_RULE.insert()(state, editor.view.dispatch.bind(editor.view));
+
+    const { doc } = editor.view.state;
+    // "Hello" paragraph, then HR, then " World" paragraph
+    expect(doc.child(0).type.name).toBe('paragraph');
+    expect(doc.child(0).textContent).toBe('Hello');
+    expect(doc.child(1).type.name).toBe('horizontal_rule');
+    expect(doc.child(2).type.name).toBe('paragraph');
+    expect(doc.child(2).textContent).toBe(' World');
   });
 });
