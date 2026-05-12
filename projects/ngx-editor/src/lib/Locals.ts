@@ -45,6 +45,11 @@ export const defaults: Record<string, string | Observable<string>> = {
   remove: 'Remove',
   enterValidUrl: 'Please enter a valid URL',
   required: 'This is required',
+
+  // aria labels
+  editorToolbar: 'Editor toolbar',
+  insertLinkDialog: 'Insert link',
+  insertImageDialog: 'Insert image',
 };
 
 export type LocalsKeys = keyof typeof defaults;

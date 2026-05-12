@@ -11,8 +11,10 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 import { NgxEditorError } from 'ngx-editor/utils';
 import Editor from '../../Editor';
+import { NgxEditorService } from '../../editor.service';
 import { Toolbar, ToolbarDropdown, ToolbarItem, ToolbarLink, ToolbarLinkOptions } from '../../types';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
@@ -110,6 +112,7 @@ const TOOLBAR_ITEM_SELECTOR = [
 export class NgxEditorMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   private menuService = inject(MenuService);
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private ngxeService = inject(NgxEditorService);
 
   @Input() toolbar: Toolbar = TOOLBAR_MINIMAL;
   @Input() colorPresets: string[] = DEFAULT_COLOR_PRESETS;
@@ -151,6 +154,10 @@ export class NgxEditorMenuComponent implements OnInit, AfterViewInit, OnDestroy 
   private mutationObserver: MutationObserver | null = null;
   private editorKeydownHandler: ((e: KeyboardEvent) => void) | null = null;
   private activeIndex = 0;
+
+  get toolbarLabel(): Observable<string> {
+    return this.ngxeService.locals.get('editorToolbar');
+  }
 
   get presets(): string[][] {
     const col = 8;
@@ -263,9 +270,20 @@ export class NgxEditorMenuComponent implements OnInit, AfterViewInit, OnDestroy 
     if (items.length === 0) {
       return false;
     }
-    const target = items[this.activeIndex] ?? items[0];
+    // Pick the active item if enabled, otherwise the first enabled item; if none, bail
+    // so callers (e.g., editor's Shift+Tab handler) don't preventDefault and trap focus.
+    let target = items[this.activeIndex];
+    if (!target || !this.isItemEnabled(target)) {
+      const idx = this.findEnabledIndex(items, 0, 1);
+      if (idx === -1) {
+        return false;
+      }
+      target = items[idx];
+      this.activeIndex = idx;
+      this.applyRovingTabindex();
+    }
     target.focus();
-    return true;
+    return document.activeElement === target;
   }
 
   @HostListener('focusin', ['$event']) onFocusIn(event: FocusEvent): void {

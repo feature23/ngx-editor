@@ -14,7 +14,7 @@
 
 <!-- popup -->
 @if (showPopup) {
-  <div class="NgxEditor__Popup" role="dialog">
+  <div class="NgxEditor__Popup" role="dialog" [attr.aria-label]="getLabel('insertImageDialog') | async">
     <form class="NgxEditor__Popup--Form" [formGroup]="form" (ngSubmit)="insertLink($event)">
       <div class="NgxEditor__Popup--FormGroup">
         <div class="NgxEditor__Popup--Col">

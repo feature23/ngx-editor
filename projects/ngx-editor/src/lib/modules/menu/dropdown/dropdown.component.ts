@@ -151,9 +151,10 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewChecked {
     const currentIndex = buttons.indexOf(event.target as HTMLButtonElement);
 
     if (event.key === 'Tab') {
-      // Tab while a dropdown item is focused: close the dropdown and let the
-      // browser proceed with normal tab navigation from the trigger.
-      this.closeDropdown(false);
+      // Move focus back to the trigger before closing — otherwise the focused
+      // item is removed from the DOM and the browser loses its tab anchor.
+      // The browser's default Tab handling then resumes from the trigger.
+      this.closeDropdown(true);
       return;
     }
 
