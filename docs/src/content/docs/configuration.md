@@ -70,7 +70,12 @@ NgxEditorModule.forRoot({
     title: 'Title',
     remove: 'Remove',
     enterValidUrl: 'Please enter a valid URL',
-    required: 'This is required'
+    required: 'This is required',
+
+    // aria labels
+    editorToolbar: 'Editor toolbar',
+    insertLinkDialog: 'Insert link',
+    insertImageDialog: 'Insert image',
   },
 });
 ```

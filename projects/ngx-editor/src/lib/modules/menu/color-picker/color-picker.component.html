@@ -13,7 +13,7 @@
 ></button>
 
 @if (showPopup) {
-  <div class="NgxEditor__Popup">
+  <div class="NgxEditor__Popup" role="dialog" [attr.aria-label]="title | async">
     @for (colorGroup of presets; track $index) {
       <div class="NgxEditor__ColorContainer">
         @for (color of colorGroup; track $index) {

@@ -6,8 +6,8 @@
   [disabled]="disabled"
   [innerHTML]="html | sanitizeHtml"
   (mousedown)="onMouseClick($event)"
-  (keydown.enter)="onKeydown()"
-  (keydown.space)="onKeydown()"
+  (keydown.enter)="onKeydown($event)"
+  (keydown.space)="onKeydown($event)"
   [title]="getTitle(name) | async"
   [ariaLabel]="getTitle(name) | async"
 ></button>
