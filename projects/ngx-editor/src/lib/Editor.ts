@@ -138,22 +138,25 @@ class Editor {
     }
 
     const { state } = this.view;
-    const { tr, doc } = state;
 
     const newDoc = parseContent(content, this.schema, this.options.parseOptions);
 
-    tr.replaceWith(0, state.doc.content.size, newDoc);
-
     // don't emit if both content is same
-    if (doc.eq(tr.doc)) {
+    if (state.doc.eq(newDoc)) {
       return;
     }
 
-    if (!tr.docChanged) {
-      return;
-    }
+    // Create a new state to avoid recording this change in the undo history.
+    // This prevents Ctrl/Cmd+Z from clearing the initial content.
+    const newState = EditorState.create({
+      doc: newDoc,
+      schema: this.schema,
+      plugins: state.plugins,
+    });
+    this.view.updateState(newState);
 
-    this.view.dispatch(tr);
+    const json = newState.doc.toJSON();
+    this.valueChangesSubject.next(json);
   }
 
   registerPlugin(plugin: Plugin): void {
