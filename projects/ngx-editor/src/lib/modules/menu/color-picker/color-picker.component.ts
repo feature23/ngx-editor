@@ -5,7 +5,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  inject
+  inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
@@ -23,6 +24,7 @@ type Command = typeof TextColor | typeof TextBackgroundColor;
   selector: 'ngx-color-picker',
   templateUrl: './color-picker.component.html',
   styleUrls: ['./color-picker.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AsyncPipe, CommonModule, SanitizeHtmlPipe],
 })
 export class ColorPickerComponent implements OnInit, OnDestroy {
@@ -57,7 +59,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
     const r = parseInt(color.substring(0, 2), 16);
     const g = parseInt(color.substring(2, 4), 16);
     const b = parseInt(color.substring(4, 6), 16);
-    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
     return yiq >= 128 ? 'black' : 'white';
   }
 

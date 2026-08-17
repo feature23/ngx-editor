@@ -5,7 +5,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  inject
+  inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -31,6 +32,7 @@ const DEFAULT_LINK_OPTIONS: LinkOptions = {
   selector: 'ngx-link',
   templateUrl: './link.component.html',
   styleUrls: ['./link.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AsyncPipe, CommonModule, ReactiveFormsModule, SanitizeHtmlPipe],
 })
 export class LinkComponent implements OnInit, OnDestroy {
@@ -41,7 +43,7 @@ export class LinkComponent implements OnInit, OnDestroy {
   @Input({
     transform: (value: Partial<LinkOptions>) => ({ ...DEFAULT_LINK_OPTIONS, ...value }),
   })
-    options: Partial<LinkOptions> = DEFAULT_LINK_OPTIONS;
+  options: Partial<LinkOptions> = DEFAULT_LINK_OPTIONS;
 
   showPopup = false;
   isActive = false;
@@ -131,7 +133,9 @@ export class LinkComponent implements OnInit, OnDestroy {
   }
 
   private setText = () => {
-    const { state: { selection, doc } } = this.editorView;
+    const {
+      state: { selection, doc },
+    } = this.editorView;
     const { empty, from, to } = selection;
     const selectedText = !empty ? doc.textBetween(from, to) : '';
 

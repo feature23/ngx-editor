@@ -1,5 +1,4 @@
-
-import { Component, OnDestroy, OnInit, ViewEncapsulation, isDevMode } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, isDevMode, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
@@ -23,14 +22,15 @@ import schema from './schema';
   styleUrls: ['editor.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     NgxEditorComponent,
     NgxEditorMenuComponent,
     NgxEditorFloatingMenuComponent,
-    AppCustomMenuComponent
-],
+    AppCustomMenuComponent,
+  ],
 })
 export class EditorComponent implements OnInit, OnDestroy {
   isDevMode = isDevMode();

@@ -8,6 +8,7 @@ import {
   OnInit,
   TemplateRef,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -99,6 +100,7 @@ const TOOLBAR_ITEM_SELECTOR = [
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
   providers: [MenuService],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     ColorPickerComponent,
@@ -138,14 +140,7 @@ export class NgxEditorMenuComponent implements OnInit, AfterViewInit, OnDestroy 
     'subscript',
   ];
 
-  insertCommands: ToolbarItem[] = [
-    'horizontal_rule',
-    'format_clear',
-    'indent',
-    'outdent',
-    'undo',
-    'redo',
-  ];
+  insertCommands: ToolbarItem[] = ['horizontal_rule', 'format_clear', 'indent', 'outdent', 'undo', 'redo'];
 
   iconContainerClass = ['NgxEditor__MenuItem', 'NgxEditor__MenuItem--IconContainer'];
   dropdownContainerClass = ['NgxEditor__Dropdown'];
@@ -239,7 +234,7 @@ export class NgxEditorMenuComponent implements OnInit, AfterViewInit, OnDestroy 
   private findEnabledIndex(items: HTMLElement[], start: number, step: 1 | -1): number {
     const len = items.length;
     for (let i = 0; i < len; i += 1) {
-      const idx = ((start + step * i) % len + len) % len;
+      const idx = (((start + step * i) % len) + len) % len;
       if (this.isItemEnabled(items[idx])) {
         return idx;
       }

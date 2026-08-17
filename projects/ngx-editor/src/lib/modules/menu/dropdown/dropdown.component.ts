@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
@@ -21,6 +22,7 @@ import { ToggleCommands } from '../MenuCommands';
   selector: 'ngx-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AsyncPipe, CommonModule],
 })
 export class DropdownComponent implements OnInit, OnDestroy, AfterViewChecked {
@@ -63,9 +65,7 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private getTriggerButton(): HTMLButtonElement | null {
-    return (this.el.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
-      'button.NgxEditor__Dropdown--Text',
-    );
+    return (this.el.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('button.NgxEditor__Dropdown--Text');
   }
 
   private getDropdownItemButtons(): HTMLButtonElement[] {
@@ -79,7 +79,7 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewChecked {
   private findEnabledItemIndex(buttons: HTMLButtonElement[], start: number, step: 1 | -1): number {
     const len = buttons.length;
     for (let i = 0; i < len; i += 1) {
-      const idx = ((start + step * i) % len + len) % len;
+      const idx = (((start + step * i) % len) + len) % len;
       if (!buttons[idx].disabled) {
         return idx;
       }
@@ -264,10 +264,7 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewChecked {
             (b, i) => this.items[i] === this.activeItem && !this.disabledItems.includes(this.activeItem),
           )
         : -1;
-      const target =
-        activeBtnIndex !== -1
-          ? activeBtnIndex
-          : this.findEnabledItemIndex(buttons, 0, 1);
+      const target = activeBtnIndex !== -1 ? activeBtnIndex : this.findEnabledItemIndex(buttons, 0, 1);
       if (target !== -1) {
         buttons[target].focus();
       }

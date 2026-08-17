@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ import { InsertCommands } from '../MenuCommands';
   selector: 'ngx-insert-command',
   templateUrl: './insert-command.component.html',
   styleUrls: ['./insert-command.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AsyncPipe, SanitizeHtmlPipe],
 })
 export class InsertCommandComponent implements OnInit, OnDestroy {
