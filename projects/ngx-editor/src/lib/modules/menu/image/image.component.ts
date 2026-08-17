@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { uniq } from 'ngx-editor/utils';
@@ -16,6 +16,7 @@ import { Image as ImageCommand } from '../MenuCommands';
   selector: 'ngx-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AsyncPipe, SanitizeHtmlPipe, ReactiveFormsModule, CommonModule],
 })
 export class ImageComponent implements OnInit, OnDestroy {

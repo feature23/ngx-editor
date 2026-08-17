@@ -15,6 +15,11 @@ export default tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      // Angular 22 made OnPush the default change detection strategy. Components here
+      // explicitly opt back in to `Eager` to preserve the pre-v22 behaviour they were
+      // written against. Converting them to OnPush is a behavioural change that needs
+      // per-component verification, so it is tracked separately from the v22 upgrade.
+      "@angular-eslint/prefer-on-push-component-change-detection": "off",
       "@typescript-eslint/max-params": [
         "error",
         {

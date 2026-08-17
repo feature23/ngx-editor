@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
@@ -15,12 +15,12 @@ import { ToggleCommands } from '../MenuCommands';
   templateUrl: './bubble.component.html',
   styleUrls: ['./bubble.component.scss'],
   imports: [AsyncPipe, CommonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [SanitizeHtmlPipe],
 })
 export class BubbleComponent implements OnInit, OnDestroy {
   private sanitizeHTML = inject(SanitizeHtmlPipe);
   private ngxeService = inject(NgxEditorService);
-
 
   private get view(): EditorView {
     return this.editor.view;

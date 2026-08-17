@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { EditorView } from 'prosemirror-view';
 import { Observable, Subscription } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -14,6 +14,7 @@ import { ToggleCommands } from '../MenuCommands';
   selector: 'ngx-toggle-command',
   templateUrl: './toggle-command.component.html',
   styleUrls: ['./toggle-command.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AsyncPipe, SanitizeHtmlPipe],
 })
 export class ToggleCommandComponent implements OnInit, OnDestroy {

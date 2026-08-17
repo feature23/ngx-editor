@@ -1,4 +1,3 @@
-
 import {
   Component,
   ElementRef,
@@ -7,7 +6,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  inject
+  inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import type { VirtualElement } from '@floating-ui/core';
 import { autoPlacement, computePosition, detectOverflow, offset } from '@floating-ui/dom';
@@ -29,11 +29,11 @@ interface BubblePosition {
   selector: 'ngx-editor-floating-menu',
   templateUrl: './floating-menu.component.html',
   styleUrls: ['./floating-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [BubbleComponent],
 })
 export class NgxEditorFloatingMenuComponent implements OnInit, OnDestroy {
   el = inject<ElementRef<HTMLElement>>(ElementRef);
-
 
   @HostBinding('style') get display(): Partial<CSSStyleDeclaration> {
     return {
@@ -158,8 +158,8 @@ export class NgxEditorFloatingMenuComponent implements OnInit, OnDestroy {
       placement: 'top',
       middleware: [
         offset(5),
-        this.autoPlace
-          && autoPlacement({
+        this.autoPlace &&
+          autoPlacement({
             boundary: view.dom,
             padding: 5,
             allowedPlacements: ['top', 'bottom'],
