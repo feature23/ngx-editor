@@ -12,13 +12,13 @@
     "ng": "ng",
     "lint": "ng lint",
     "format:md": "prettier **/*.md --write",
-    "test:demo": "ng test demo --browsers ChromeHeadless --watch false",
-    "test:lib": "ng test ngx-editor --browsers ChromeHeadless --watch false",
+    "test:demo": "ng test demo --watch false",
+    "test:lib": "ng test ngx-editor --watch false",
     "test": "npm run test:lib && npm run test:demo",
     "prepare": "is-ci || husky"
   },
   "engines": {
-    "node": ">=20",
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0",
     "npm": ">=8.19"
   },
   "keywords": [
@@ -56,7 +56,6 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
-    "@types/jasmine": "~5.1.0",
     "@types/node": "^25.2.3",
     "@types/trusted-types": "~2.0.7",
     "angular-eslint": "^22.1.0",
@@ -66,13 +65,7 @@
     "husky": "^9.1.7",
     "is-ci": "^4.1.0",
     "istanbul-lib-instrument": "^6.0.3",
-    "jasmine-core": "~5.6.0",
     "jsdom": "^30.0.1",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^15.5.1",
     "ng-packagr": "^22.0.0",
     "picocolors": "^1.1.1",

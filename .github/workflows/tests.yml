@@ -1,7 +1,7 @@
 name: Tests
 
 env:
-  NODE_VERSION: 20
+  NODE_VERSION: 24
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    name: Karma unit tests
+    name: Unit tests
     permissions:
       contents: read
     runs-on: ubuntu-latest
